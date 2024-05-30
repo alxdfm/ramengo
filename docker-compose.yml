@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysqldb
+    environment:
+      MYSQL_ROOT_PASSWORD: "ramengo"
+      MYSQL_DATABASE: "ramengo"
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./var/lib/mysql
+    networks:
+      - my_network
+
+networks:
+  my_network:
