@@ -11,7 +11,6 @@ const {
   MYSQL_PORT,
 } = process.env;
 
-console.log(MYSQL_ROOT_PASSWORD);
 export const MysqlDataSource = new DataSource({
   type: 'mysql',
   host: MYSQL_HOST,
