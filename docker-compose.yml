@@ -5,8 +5,8 @@ services:
     image: mysql:8.0
     container_name: mysqldb
     environment:
-      MYSQL_ROOT_PASSWORD: "ramengo"
-      MYSQL_DATABASE: "ramengo"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3307:3306"
     volumes:
