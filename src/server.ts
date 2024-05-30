@@ -1,6 +1,9 @@
 import express from 'express';
 
 import { Router, Request, Response } from 'express';
+import { MysqlDataSource } from './data/typeorm/mysql';
+import { TypeOrmDataSource } from './data/typeorm/data-source';
+import { Protein } from './data/typeorm/entities/protein';
 
 const app = express();
 
@@ -8,8 +11,11 @@ const route = Router();
 
 app.use(express.json());
 
-route.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Hello World' });
+const database = new TypeOrmDataSource(MysqlDataSource);
+
+route.get('/', async (req: Request, res: Response) => {
+  const data = await database.find(Protein);
+  res.json({ message: `data: ${data}` });
 });
 
 app.use(route);
