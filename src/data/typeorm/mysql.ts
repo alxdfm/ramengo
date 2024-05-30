@@ -1,5 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Protein } from './entities/protein';
+import { Broth } from './entities/broth';
+import { Order } from './entities/order';
 
 const {
   MYSQL_ROOT_PASSWORD,
@@ -18,6 +20,6 @@ export const MysqlDataSource = new DataSource({
   password: MYSQL_ROOT_PASSWORD,
   database: MYSQL_DATABASE,
   logging: false,
-  entities: [Protein],
+  entities: [Protein, Broth, Order],
   synchronize: true,
 });
