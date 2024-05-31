@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { DatabaseWrapper } from '../interfaces/database-wrapper';
+import { DatabaseWrapper } from '../../interfaces/database-wrapper';
 
 export class TypeOrmDataSource implements DatabaseWrapper {
   private database: DataSource;

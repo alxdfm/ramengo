@@ -1,5 +1,5 @@
 import { DatabaseWrapper } from '../../data/interfaces/database-wrapper';
-import { Protein as DBProtein } from '../../data/typeorm/entities/protein';
+import { Protein as DBProtein } from '../../data/data-sources/typeorm/entities/protein';
 import { Protein } from '../entities/protein';
 import { IProteinRepository } from '../interfaces/repositories/protein-repository';
 import { IGetAllProteinsUseCase } from '../interfaces/use-cases/get-all-proteins';
