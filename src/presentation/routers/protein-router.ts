@@ -4,14 +4,14 @@ import { IGetAllProteinsUseCase } from '../../domain/interfaces/use-cases/get-al
 import { ErrorType } from '../types';
 
 export default function ProteinRouter(
-  getAllContactsUseCase: IGetAllProteinsUseCase,
+  getAllProteinsUseCase: IGetAllProteinsUseCase,
 ) {
   const router = express.Router();
 
   router.get('/proteins', async (req: Request, res: Response) => {
     try {
-      const contacts = await getAllContactsUseCase.execute();
-      res.send(contacts);
+      const proteins = await getAllProteinsUseCase.execute();
+      res.send(proteins);
     } catch (err) {
       const error: ErrorType = { error: 'could not get proteins' };
       res.status(500).send(error);
