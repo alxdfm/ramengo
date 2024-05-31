@@ -10,12 +10,14 @@ import { Protein } from './data/data-sources/typeorm/entities/protein';
 import { proteinMiddleWare } from './presentation/middlewares/protein-middleware';
 import { brothMiddleWare } from './presentation/middlewares/broth-middleware';
 import { orderMiddleWare } from './presentation/middlewares/order-middleware';
+import { authorizationMiddleware } from './presentation/middlewares/authorization-middleware';
 
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
 
   server.use(
     '/',
+    authorizationMiddleware,
     proteinMiddleWare(
       new GetAllProteinsUseCase(database, { proteinEntity: Protein }),
     ),
