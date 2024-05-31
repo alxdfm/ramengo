@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { DatabaseWrapper } from '../../interfaces/database-wrapper';
 
-export class TypeOrmDataSource implements DatabaseWrapper {
+export class TypeORMWrapper implements DatabaseWrapper {
   private database: DataSource;
 
   constructor(database: DataSource) {

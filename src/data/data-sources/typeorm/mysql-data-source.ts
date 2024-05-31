@@ -11,7 +11,7 @@ const {
   MYSQL_PORT,
 } = process.env;
 
-export const MysqlDataSource = new DataSource({
+export const MySQLDataSource = new DataSource({
   type: 'mysql',
   host: MYSQL_HOST,
   port: Number(MYSQL_PORT),
