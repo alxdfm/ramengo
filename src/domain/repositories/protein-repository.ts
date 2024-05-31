@@ -9,7 +9,11 @@ export class ProteinRepository implements IProteinRepository {
     this.dataSource = dataSource;
   }
 
-  getProteins(query: any): Promise<Protein[]> {
+  async getProteins(query: any): Promise<Protein[]> {
     return this.dataSource.find(query);
+  }
+
+  async getProtein(query: any, options?: any): Promise<Protein> {
+    return this.dataSource.findOne(query, options);
   }
 }

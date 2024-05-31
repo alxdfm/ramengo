@@ -8,6 +8,8 @@ import { GetAllBroths } from './domain/use-cases/get-all-broths';
 import OrderRouter from './presentation/routers/order-router';
 import { NewOrder } from './domain/use-cases/new-order';
 import { Order } from './data/data-sources/typeorm/entities/order';
+import { Broth } from './data/data-sources/typeorm/entities/broth';
+import { Protein } from './data/data-sources/typeorm/entities/protein';
 
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
@@ -15,7 +17,11 @@ import { Order } from './data/data-sources/typeorm/entities/order';
   const proteinMiddleWare = ProteinRouter(new GetAllProteins(database)); // TODO: Adicionar entity aqui também
   const brothMiddleWare = BrothRouter(new GetAllBroths(database)); // TODO: Adicionar entity aqui também
   const orderMiddleWare = OrderRouter(
-    new NewOrder(database, { orderEntity: Order }),
+    new NewOrder(database, {
+      orderEntity: Order,
+      brothEntity: Broth,
+      proteinEntity: Protein,
+    }),
   );
 
   server.use('/', proteinMiddleWare, brothMiddleWare, orderMiddleWare);

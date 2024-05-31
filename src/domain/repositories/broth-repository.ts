@@ -9,7 +9,11 @@ export class BrothRepository implements IBrothRepository {
     this.dataSource = dataSource;
   }
 
-  getBroths(query: any): Promise<Broth[]> {
+  async getBroths(query: any): Promise<Broth[]> {
     return this.dataSource.find(query);
+  }
+
+  async getBroth(query: any, options?: any): Promise<Broth> {
+    return this.dataSource.findOne(query, options);
   }
 }

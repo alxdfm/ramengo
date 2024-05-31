@@ -11,7 +11,6 @@ export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
       const order = await newOrderUseCase.execute(req.body);
       res.send(order);
     } catch (err) {
-      console.log(err);
       const error: ErrorType = { error: 'could not place order' };
       res.status(500).send(error);
     }
