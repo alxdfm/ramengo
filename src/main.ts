@@ -4,7 +4,7 @@ import { MySQLDataSource } from './data/data-sources/typeorm/mysql-data-source';
 import ProteinRouter from './presentation/routers/protein-router';
 import { GetAllProteins } from './domain/use-cases/get-all-proteins';
 import BrothRouter from './presentation/routers/broth-router';
-import { GetAllBroths } from './domain/use-cases/get-all-broth';
+import { GetAllBroths } from './domain/use-cases/get-all-broths';
 
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
