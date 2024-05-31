@@ -13,6 +13,8 @@ import { OrderCreatedType } from '../types/order/order-created';
 import { OrderEntitiesType } from '../types/order/order-entities';
 import { OrderInputType } from '../types/order/order-input';
 
+const { LAMEN_IMAGE_URL } = process.env;
+
 export class NewOrder implements INewOrderUseCase {
   orderRepository: IOrderRepository;
   brothRepository: IBrothRepository;
@@ -66,8 +68,7 @@ export class NewOrder implements INewOrderUseCase {
     return {
       id: result.id,
       description: formatDescriptionOrder(broth.name, protein.name),
-      image:
-        'https://images.vexels.com/media/users/3/249295/isolated/preview/6b84c3546f5ab87ecf81c577245c13ae-ramen-svg-2-1.png',
+      image: String(LAMEN_IMAGE_URL),
     };
   }
 }

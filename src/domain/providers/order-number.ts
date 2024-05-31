@@ -1,13 +1,15 @@
 import axios from 'axios';
 
+const { ORDER_ID_URL, ORDER_ID_API_KEY } = process.env;
+
 export class OrderNumber {
   async getOrderNumber(): Promise<string> {
     try {
       const response = await axios.post(
-        'https://api.tech.redventures.com.br/orders/generate-id',
+        String(ORDER_ID_URL),
         {},
         {
-          headers: { 'x-api-key': 'ZtVdh8XQ2U8pWI2gmZ7f796Vh8GllXoN7mr0djNf' },
+          headers: { 'x-api-key': ORDER_ID_API_KEY },
         },
       );
 

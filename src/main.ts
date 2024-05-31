@@ -14,8 +14,12 @@ import { Protein } from './data/data-sources/typeorm/entities/protein';
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
 
-  const proteinMiddleWare = ProteinRouter(new GetAllProteins(database)); // TODO: Adicionar entity aqui também
-  const brothMiddleWare = BrothRouter(new GetAllBroths(database)); // TODO: Adicionar entity aqui também
+  const proteinMiddleWare = ProteinRouter(
+    new GetAllProteins(database, { proteinEntity: Protein }),
+  );
+  const brothMiddleWare = BrothRouter(
+    new GetAllBroths(database, { brothEntity: Broth }),
+  );
   const orderMiddleWare = OrderRouter(
     new NewOrder(database, {
       orderEntity: Order,

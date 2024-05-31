@@ -13,8 +13,4 @@ export class OrderRepository implements IOrderRepository {
   async createOrder(input: OrderInputType): Promise<Order> {
     return this.dataSource.save(input);
   }
-
-  async getOrder(query: any, options?: any): Promise<Order> {
-    return this.dataSource.findOne(query, options);
-  }
 }
