@@ -3,13 +3,13 @@ import { Broth } from '../entities/broth';
 import { IBrothRepository } from '../interfaces/repositories/broth-repository';
 import { IGetAllBrothsUseCase } from '../interfaces/use-cases/get-all-broths';
 import { BrothRepository } from '../repositories/broth-repository';
-import { OrderEntitiesType } from '../types/order/order-entities';
+import { EntitiesType } from '../types/entities';
 
-export class GetAllBroths implements IGetAllBrothsUseCase {
+export class GetAllBrothsUseCase implements IGetAllBrothsUseCase {
   brothRepository: IBrothRepository;
   brothEntity: any;
 
-  constructor(database: DatabaseWrapper, entities: OrderEntitiesType) {
+  constructor(database: DatabaseWrapper, entities: EntitiesType) {
     this.brothRepository = new BrothRepository(database);
     this.brothEntity = entities.brothEntity;
   }

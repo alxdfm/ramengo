@@ -10,12 +10,12 @@ import { BrothRepository } from '../repositories/broth-repository';
 import { OrderRepository } from '../repositories/order-repository';
 import { ProteinRepository } from '../repositories/protein-repository';
 import { OrderCreatedType } from '../types/order/order-created';
-import { OrderEntitiesType } from '../types/order/order-entities';
+import { EntitiesType } from '../types/entities';
 import { OrderInputType } from '../types/order/order-input';
 
 const { LAMEN_IMAGE_URL } = process.env;
 
-export class NewOrder implements INewOrderUseCase {
+export class NewOrderUseCase implements INewOrderUseCase {
   orderRepository: IOrderRepository;
   brothRepository: IBrothRepository;
   proteinRepository: IProteinRepository;
@@ -23,7 +23,7 @@ export class NewOrder implements INewOrderUseCase {
   brothEntity: any;
   proteinEntity: any;
 
-  constructor(database: DatabaseWrapper, entities: OrderEntitiesType) {
+  constructor(database: DatabaseWrapper, entities: EntitiesType) {
     this.orderRepository = new OrderRepository(database);
     this.orderEntity = entities.orderEntity;
     this.brothRepository = new BrothRepository(database);
