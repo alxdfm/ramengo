@@ -16,8 +16,12 @@ export class TypeORMWrapper implements DatabaseWrapper {
     this.database = database;
   }
 
-  find(query: any): Promise<any[]> {
-    return this.database.manager.find(query);
+  find(query: any, options?: any): Promise<any[]> {
+    return this.database.manager.find(query, options);
+  }
+
+  findOne(query: any, options?: any): Promise<any> {
+    return this.database.manager.findOne(query, options);
   }
 
   save(entity: any): Promise<any[]> {
