@@ -1,3 +1,3 @@
-export const descriptionOrder = (broth: string, protein: string) => {
+export const formatDescriptionOrder = (broth: string, protein: string) => {
   return `${broth} and ${protein} Ramen`;
 };
