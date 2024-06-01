@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev -r dotenv/config --inspect --transpile-only --ignore-watch node_modules dist/main.js",
+    "dev": "ts-node-dev -r dotenv/config --inspect --transpile-only --ignore-watch node_modules dist/main.js",
+    "start": "ts-node -r dotenv/config --transpile-only dist/main.js",
     "build": "tsc",
     "docker-up": "docker-compose up --build -d",
     "docker-down": "docker-compose down"
