@@ -12,6 +12,8 @@ import { brothMiddleWare } from './presentation/middlewares/broth-middleware';
 import { orderMiddleWare } from './presentation/middlewares/order-middleware';
 import { authorizationMiddleware } from './presentation/middlewares/authorization-middleware';
 
+const { PORT } = process.env;
+
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
 
@@ -30,5 +32,5 @@ import { authorizationMiddleware } from './presentation/middlewares/authorizatio
       }),
     ),
   );
-  server.listen(3030, () => console.log('Running on http://localhost:3030'));
+  server.listen(PORT, () => console.log(`Running server on port ${PORT}`));
 })();
