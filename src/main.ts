@@ -22,8 +22,8 @@ const { PORT, ALLOW_ORIGIN } = process.env;
     '/',
     cors({
       origin: [String(ALLOW_ORIGIN)],
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      preflightContinue: false,
+      methods: 'GET,POST',
+      preflightContinue: true,
       optionsSuccessStatus: 204,
     }),
     authorizationMiddleware,
