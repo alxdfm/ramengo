@@ -23,7 +23,8 @@ const { PORT, ALLOW_ORIGIN } = process.env;
     cors({
       origin: ALLOW_ORIGIN,
       methods: ['GET', 'POST'],
-      allowedHeaders: ['x-api-key'],
+      allowedHeaders: '*',
+      preflightContinue: true,
     }),
     authorizationMiddleware,
     proteinMiddleWare(
