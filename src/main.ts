@@ -20,7 +20,11 @@ const { PORT, ALLOW_ORIGIN } = process.env;
 
   server.use(
     '/',
-    cors({ origin: ALLOW_ORIGIN }),
+    cors({
+      origin: ALLOW_ORIGIN,
+      methods: ['GET', 'POST'],
+      allowedHeaders: ['x-api-key'],
+    }),
     authorizationMiddleware,
     proteinMiddleWare(
       new GetAllProteinsUseCase(database, { proteinEntity: Protein }),
