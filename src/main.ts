@@ -13,14 +13,19 @@ import { brothMiddleWare } from './presentation/middlewares/broth-middleware';
 import { orderMiddleWare } from './presentation/middlewares/order-middleware';
 import { authorizationMiddleware } from './presentation/middlewares/authorization-middleware';
 
-const { PORT } = process.env;
+const { PORT, ALLOW_ORIGIN } = process.env;
 
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
 
   server.use(
     '/',
-    cors(),
+    cors({
+      origin: [String(ALLOW_ORIGIN)],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    }),
     authorizationMiddleware,
     proteinMiddleWare(
       new GetAllProteinsUseCase(database, { proteinEntity: Protein }),
