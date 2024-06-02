@@ -1,13 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 
-const { API_KEY, ALLOW_ORIGIN } = process.env;
+const { API_KEY } = process.env;
 
 export const authorizationMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  res.header('Access-Control-Allow-Origin', ALLOW_ORIGIN);
   const apiKey = req.headers['x-api-key'];
 
   const isEmptyApiKey = !apiKey;
