@@ -22,9 +22,12 @@ const { PORT, ALLOW_ORIGIN } = process.env;
     '/',
     cors({
       origin: [String(ALLOW_ORIGIN)],
-      methods: 'GET,POST',
+      methods: ['GET', 'POST'],
       preflightContinue: true,
       optionsSuccessStatus: 204,
+      allowedHeaders: '*',
+      exposedHeaders: '*',
+      credentials: true,
     }),
     authorizationMiddleware,
     proteinMiddleWare(
