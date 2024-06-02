@@ -8,7 +8,7 @@ export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
   const router = express.Router();
 
   router.post(
-    '/orders',
+    '/order',
     checkOrderDataMiddleware,
     async (req: Request, res: Response) => {
       try {
