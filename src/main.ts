@@ -1,4 +1,5 @@
 import server from './server';
+import express from 'express';
 import cors from 'cors';
 import { TypeORMWrapper } from './data/data-sources/typeorm/typeorm-wrapper';
 import { MySQLDataSource } from './data/data-sources/typeorm/mysql-data-source';
@@ -25,6 +26,8 @@ const { PORT } = process.env;
   const brothRepository = new BrothRepository(database);
   const orderRepository = new OrderRepository(database);
 
+  const router = express.Router();
+
   server.use(
     '/',
     cors(),
@@ -38,12 +41,15 @@ const { PORT } = process.env;
           proteinEntity: Protein,
         },
       ),
+      router,
     ),
     ProteinRouter(
       new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
+      router,
     ),
     BrothRouter(
       new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
+      router,
     ),
   );
 

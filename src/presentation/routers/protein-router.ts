@@ -1,13 +1,11 @@
-import express from 'express';
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 import { IGetAllProteinsUseCase } from '../../domain/interfaces/use-cases/get-all-proteins';
 import { ErrorType } from '../types';
 
 export default function ProteinRouter(
   getAllProteinsUseCase: IGetAllProteinsUseCase,
+  router: Router,
 ) {
-  const router = express.Router();
-
   router.get('/proteins', async (req: Request, res: Response) => {
     try {
       const proteins = await getAllProteinsUseCase.execute();

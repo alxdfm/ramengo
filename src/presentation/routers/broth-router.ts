@@ -1,11 +1,12 @@
-import express from 'express';
 import { Request, Response } from 'express';
 import { IGetAllBrothsUseCase } from '../../domain/interfaces/use-cases/get-all-broths';
 import { ErrorType } from '../types';
+import { Router } from 'express';
 
-export default function BrothRouter(getAllBrothsUseCase: IGetAllBrothsUseCase) {
-  const router = express.Router();
-
+export default function BrothRouter(
+  getAllBrothsUseCase: IGetAllBrothsUseCase,
+  router: Router,
+) {
   router.get('/broths', async (req: Request, res: Response) => {
     try {
       const broths = await getAllBrothsUseCase.execute();
