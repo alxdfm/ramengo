@@ -9,7 +9,7 @@ export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
 
   router.post(
     '/order',
-    checkOrderDataMiddleware,
+    // checkOrderDataMiddleware,
     async (req: Request, res: Response) => {
       try {
         const order = await newOrderUseCase.execute(req.body);
