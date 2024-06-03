@@ -1,13 +1,17 @@
-import { Broth } from '../../data/data-sources/typeorm/entities/broth';
-import { Order } from '../../data/data-sources/typeorm/entities/order';
-import { Protein } from '../../data/data-sources/typeorm/entities/protein';
-import { Order as OrderDomain } from '../../domain/entities/order';
-import { IBrothRepository } from '../../domain/interfaces/repositories/broth-repository';
-import { IOrderRepository } from '../../domain/interfaces/repositories/order-repository';
-import { IProteinRepository } from '../../domain/interfaces/repositories/protein-repository';
-import { OrderInputType } from '../../domain/types/order/order-input';
+import { Broth as DBBroth } from '../../data/data-sources/typeorm/entities/broth';
+import { Order as DBOrder } from '../../data/data-sources/typeorm/entities/order';
+import { Protein as DBProtein } from '../../data/data-sources/typeorm/entities/protein';
+import { Broth } from '../../domain/entities/broth';
+import { Order } from '../../domain/entities/order';
+import { Protein } from '../../domain/entities/protein';
 import { NewOrderUseCase } from '../../domain/use-cases/new-order';
 import { ApiError } from '../../errors/api-errors';
+import {
+  MockBaseRepository,
+  MockBrothRepository,
+  MockOrderRepository,
+  MockProteinRepository,
+} from '../mocks/repository-mocks';
 
 const getOrderNumberMock = jest.fn();
 
@@ -18,33 +22,9 @@ jest.mock('../../domain/providers/order-number', () => {
 });
 
 describe('get-all-proteins', () => {
-  class MockProteinRepository implements IProteinRepository {
-    getProtein(query: any, options?: any): Promise<Protein> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-    getProteins(query: any, options?: any): Promise<Protein[]> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-  }
-
-  class MockBrothRepository implements IBrothRepository {
-    getBroth(query: any, options?: any): Promise<Broth> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-    getBroths(query: any, options?: any): Promise<Broth[]> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-  }
-
-  class MockOrderRepository implements IOrderRepository {
-    createOrder(input: OrderInputType): Promise<OrderDomain> {
-      throw new Error(`Method not implemented. ${input}`);
-    }
-  }
-
-  let mockProteinRepository: IProteinRepository;
-  let mockBrothRepository: IBrothRepository;
-  let mockOrderRepository: IOrderRepository;
+  let mockProteinRepository: MockBaseRepository<Protein>;
+  let mockBrothRepository: MockBaseRepository<Broth>;
+  let mockOrderRepository: MockBaseRepository<Order>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -53,8 +33,7 @@ describe('get-all-proteins', () => {
     mockOrderRepository = new MockOrderRepository();
   });
 
-  describe('execute', () => {
-    process.env.LAMEN_IMAGE_URL = 'dev';
+  describe('execute()', () => {
     it('should return correct data according repository return', async () => {
       const order = {
         id: '19239',
@@ -89,15 +68,15 @@ describe('get-all-proteins', () => {
       getOrderNumberMock.mockResolvedValue(null);
 
       jest
-        .spyOn(mockProteinRepository, 'getProtein')
+        .spyOn(mockProteinRepository, 'findOne')
         .mockImplementation(() => Promise.resolve(protein));
 
       jest
-        .spyOn(mockBrothRepository, 'getBroth')
+        .spyOn(mockBrothRepository, 'findOne')
         .mockImplementation(() => Promise.resolve(broth));
 
       jest
-        .spyOn(mockOrderRepository, 'createOrder')
+        .spyOn(mockOrderRepository, 'save')
         .mockImplementation(() => Promise.resolve(order));
 
       const newOrderUseCase = new NewOrderUseCase(
@@ -107,9 +86,9 @@ describe('get-all-proteins', () => {
           orderRepository: mockOrderRepository,
         },
         {
-          brothEntity: Broth,
-          proteinEntity: Protein,
-          orderEntity: Order,
+          brothEntity: DBBroth,
+          proteinEntity: DBProtein,
+          orderEntity: DBOrder,
         },
       );
 
@@ -124,15 +103,15 @@ describe('get-all-proteins', () => {
       getOrderNumberMock.mockResolvedValue(null);
 
       jest
-        .spyOn(mockProteinRepository, 'getProtein')
+        .spyOn(mockProteinRepository, 'find')
         .mockImplementation(() => Promise.resolve(null as any));
 
       jest
-        .spyOn(mockBrothRepository, 'getBroth')
+        .spyOn(mockBrothRepository, 'find')
         .mockImplementation(() => Promise.resolve(null as any));
 
       jest
-        .spyOn(mockOrderRepository, 'createOrder')
+        .spyOn(mockOrderRepository, 'save')
         .mockImplementation(() => Promise.resolve(null as any));
 
       const newOrderUseCase = new NewOrderUseCase(
@@ -142,9 +121,9 @@ describe('get-all-proteins', () => {
           orderRepository: mockOrderRepository,
         },
         {
-          brothEntity: Broth,
-          proteinEntity: Protein,
-          orderEntity: Order,
+          brothEntity: DBBroth,
+          proteinEntity: DBProtein,
+          orderEntity: DBOrder,
         },
       );
 

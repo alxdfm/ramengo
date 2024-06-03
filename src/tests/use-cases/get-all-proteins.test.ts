@@ -1,25 +1,20 @@
 import { Protein as DBProtein } from '../../data/data-sources/typeorm/entities/protein';
 import { Protein } from '../../domain/entities/protein';
-import { IProteinRepository } from '../../domain/interfaces/repositories/protein-repository';
 import { GetAllProteinsUseCase } from '../../domain/use-cases/get-all-proteins';
+import {
+  MockBaseRepository,
+  MockProteinRepository,
+} from '../mocks/repository-mocks';
 
 describe('get-all-proteins', () => {
-  class MockProteinRepository implements IProteinRepository {
-    getProtein(query: any, options?: any): Promise<Protein> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-    getProteins(query: any, options?: any): Promise<Protein[]> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-  }
-  let mockProteinRepository: IProteinRepository;
+  let mockProteinRepository: MockBaseRepository<Protein>;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockProteinRepository = new MockProteinRepository();
   });
 
-  describe('execute', () => {
+  describe('execute()', () => {
     it('should return correct data according repository return', async () => {
       const proteins = [
         {
@@ -33,7 +28,7 @@ describe('get-all-proteins', () => {
       ];
 
       jest
-        .spyOn(mockProteinRepository, 'getProteins')
+        .spyOn(mockProteinRepository, 'find')
         .mockImplementation(() => Promise.resolve(proteins));
 
       const getBrothsUseCase = new GetAllProteinsUseCase(

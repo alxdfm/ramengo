@@ -1,30 +1,31 @@
 import { parseDataAccordingEntity } from '../../utils/entity-parser';
 import { formatDescriptionOrder } from '../../utils/format-description-order';
-import { IBrothRepository } from '../interfaces/repositories/broth-repository';
-import { IOrderRepository } from '../interfaces/repositories/order-repository';
-import { IProteinRepository } from '../interfaces/repositories/protein-repository';
 import { INewOrderUseCase } from '../interfaces/use-cases/new-order';
 import OrderNumber from '../providers/order-number';
 import { OrderCreatedType } from '../types/order/order-created';
 import { EntitiesType } from '../types/entities';
 import { OrderInputType } from '../types/order/order-input';
 import { ApiError } from '../../errors/api-errors';
+import { Order } from '../entities/order';
+import { Broth } from '../entities/broth';
+import { Protein } from '../entities/protein';
+import { IBaseRepository } from '../interfaces/repositories/base-repository';
 
 const { LAMEN_IMAGE_URL } = process.env;
 
 export class NewOrderUseCase implements INewOrderUseCase {
-  orderRepository: IOrderRepository;
-  brothRepository: IBrothRepository;
-  proteinRepository: IProteinRepository;
+  orderRepository: IBaseRepository<Order>;
+  brothRepository: IBaseRepository<Broth>;
+  proteinRepository: IBaseRepository<Protein>;
   orderEntity: any;
   brothEntity: any;
   proteinEntity: any;
 
   constructor(
     repositories: {
-      orderRepository: IOrderRepository;
-      brothRepository: IBrothRepository;
-      proteinRepository: IProteinRepository;
+      orderRepository: IBaseRepository<Order>;
+      brothRepository: IBaseRepository<Broth>;
+      proteinRepository: IBaseRepository<Protein>;
     },
     entities: EntitiesType,
   ) {
@@ -37,7 +38,7 @@ export class NewOrderUseCase implements INewOrderUseCase {
   }
 
   async getBroth(input: string) {
-    const broth = await this.brothRepository.getBroth(this.brothEntity, {
+    const broth = await this.brothRepository.findOne(this.brothEntity, {
       where: { id: input },
     });
 
@@ -45,12 +46,9 @@ export class NewOrderUseCase implements INewOrderUseCase {
   }
 
   async getProtein(input: string) {
-    const protein = await this.proteinRepository.getProtein(
-      this.proteinEntity,
-      {
-        where: { id: input },
-      },
-    );
+    const protein = await this.proteinRepository.findOne(this.proteinEntity, {
+      where: { id: input },
+    });
 
     return protein;
   }
@@ -75,7 +73,7 @@ export class NewOrderUseCase implements INewOrderUseCase {
       broth,
     });
 
-    const result = await this.orderRepository.createOrder(formattedEntity);
+    const result = await this.orderRepository.save(formattedEntity);
     const description = formatDescriptionOrder(broth.name, protein.name);
 
     return {

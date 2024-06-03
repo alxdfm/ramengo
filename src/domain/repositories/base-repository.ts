@@ -1,7 +1,8 @@
 import { DatabaseWrapper } from '../../data/interfaces/database-wrapper';
+import { IBaseRepository } from '../interfaces/repositories/base-repository';
 
-export abstract class BaseRepository<T> {
-  dataSource: DatabaseWrapper;
+export abstract class BaseRepository<T> implements IBaseRepository<T> {
+  private dataSource: DatabaseWrapper;
 
   constructor(dataSource: DatabaseWrapper) {
     this.dataSource = dataSource;

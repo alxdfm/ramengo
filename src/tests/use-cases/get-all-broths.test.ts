@@ -1,25 +1,20 @@
 import { Broth as DBBroth } from '../../data/data-sources/typeorm/entities/broth';
 import { Broth } from '../../domain/entities/broth';
-import { IBrothRepository } from '../../domain/interfaces/repositories/broth-repository';
 import { GetAllBrothsUseCase } from '../../domain/use-cases/get-all-broths';
+import {
+  MockBaseRepository,
+  MockBrothRepository,
+} from '../mocks/repository-mocks';
 
 describe('get-all-broths', () => {
-  class MockBrothRepository implements IBrothRepository {
-    getBroth(query: any, options?: any): Promise<Broth> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-    getBroths(query: any, options?: any): Promise<Broth[]> {
-      throw new Error(`Method not implemented. ${query} ${options}`);
-    }
-  }
-  let mockBrothRepository: IBrothRepository;
+  let mockBrothRepository: MockBaseRepository<Broth>;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockBrothRepository = new MockBrothRepository();
   });
 
-  describe('execute', () => {
+  describe('execute()', () => {
     it('should return correct data according repository return', async () => {
       const broths = [
         {
@@ -33,7 +28,7 @@ describe('get-all-broths', () => {
       ];
 
       jest
-        .spyOn(mockBrothRepository, 'getBroths')
+        .spyOn(mockBrothRepository, 'find')
         .mockImplementation(() => Promise.resolve(broths));
 
       const getBrothsUseCase = new GetAllBrothsUseCase(mockBrothRepository, {
