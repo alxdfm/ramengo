@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const { ORDER_ID_URL, ORDER_ID_API_KEY } = process.env;
 
-export class OrderNumber {
+export default class OrderNumber {
   async getOrderNumber(): Promise<string> {
     try {
       const response = await axios.post(

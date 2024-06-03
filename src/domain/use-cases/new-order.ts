@@ -4,7 +4,7 @@ import { IBrothRepository } from '../interfaces/repositories/broth-repository';
 import { IOrderRepository } from '../interfaces/repositories/order-repository';
 import { IProteinRepository } from '../interfaces/repositories/protein-repository';
 import { INewOrderUseCase } from '../interfaces/use-cases/new-order';
-import { OrderNumber } from '../providers/order-number';
+import OrderNumber from '../providers/order-number';
 import { OrderCreatedType } from '../types/order/order-created';
 import { EntitiesType } from '../types/entities';
 import { OrderInputType } from '../types/order/order-input';
