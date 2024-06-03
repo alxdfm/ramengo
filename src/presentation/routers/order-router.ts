@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction } from 'express';
 import { Request, Response } from 'express';
 import { ErrorType } from '../types';
 import { INewOrderUseCase } from '../../domain/interfaces/use-cases/new-order';
@@ -9,7 +9,9 @@ export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
 
   router.post(
     '/order',
-    // checkOrderDataMiddleware,
+    async (req: Request, res: Response, next: NextFunction) => {
+      checkOrderDataMiddleware(req, res, next);
+    },
     async (req: Request, res: Response) => {
       try {
         const order = await newOrderUseCase.execute(req.body);
