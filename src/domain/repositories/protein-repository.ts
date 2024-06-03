@@ -1,12 +1,14 @@
 import { DatabaseWrapper } from '../../data/interfaces/database-wrapper';
 import { Protein } from '../entities/protein';
 import { IProteinRepository } from '../interfaces/repositories/protein-repository';
+import { BaseRepository } from './base-repository';
 
-export class ProteinRepository implements IProteinRepository {
-  dataSource: DatabaseWrapper;
-
+export class ProteinRepository
+  extends BaseRepository<Protein>
+  implements IProteinRepository
+{
   constructor(dataSource: DatabaseWrapper) {
-    this.dataSource = dataSource;
+    super(dataSource);
   }
 
   async getProteins(query: any): Promise<Protein[]> {

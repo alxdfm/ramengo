@@ -1,12 +1,14 @@
 import { DatabaseWrapper } from '../../data/interfaces/database-wrapper';
 import { Broth } from '../entities/broth';
 import { IBrothRepository } from '../interfaces/repositories/broth-repository';
+import { BaseRepository } from './base-repository';
 
-export class BrothRepository implements IBrothRepository {
-  dataSource: DatabaseWrapper;
-
+export class BrothRepository
+  extends BaseRepository<Broth>
+  implements IBrothRepository
+{
   constructor(dataSource: DatabaseWrapper) {
-    this.dataSource = dataSource;
+    super(dataSource);
   }
 
   async getBroths(query: any): Promise<Broth[]> {

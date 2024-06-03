@@ -8,31 +8,44 @@ import { NewOrderUseCase } from './domain/use-cases/new-order';
 import { Order } from './data/data-sources/typeorm/entities/order';
 import { Broth } from './data/data-sources/typeorm/entities/broth';
 import { Protein } from './data/data-sources/typeorm/entities/protein';
-import { proteinMiddleWare } from './presentation/middlewares/protein-middleware';
-import { brothMiddleWare } from './presentation/middlewares/broth-middleware';
-import { orderMiddleWare } from './presentation/middlewares/order-middleware';
 import { authorizationMiddleware } from './presentation/middlewares/authorization-middleware';
+import ProteinRouter from './presentation/routers/protein-router';
+import BrothRouter from './presentation/routers/broth-router';
+import OrderRouter from './presentation/routers/order-router';
+import { ProteinRepository } from './domain/repositories/protein-repository';
+import { BrothRepository } from './domain/repositories/broth-repository';
+import { OrderRepository } from './domain/repositories/order-repository';
 
 const { PORT } = process.env;
 
 (async () => {
   const database = new TypeORMWrapper(MySQLDataSource);
 
+  const proteinRepository = new ProteinRepository(database);
+  const brothRepository = new BrothRepository(database);
+  const orderRepository = new OrderRepository(database);
+
   server.use(
     '/',
     cors(),
     authorizationMiddleware,
-    proteinMiddleWare(
-      new GetAllProteinsUseCase(database, { proteinEntity: Protein }),
+    ProteinRouter(
+      new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
     ),
-    brothMiddleWare(new GetAllBrothsUseCase(database, { brothEntity: Broth })),
-    orderMiddleWare(
-      new NewOrderUseCase(database, {
-        orderEntity: Order,
-        brothEntity: Broth,
-        proteinEntity: Protein,
-      }),
+    BrothRouter(
+      new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
+    ),
+    OrderRouter(
+      new NewOrderUseCase(
+        { orderRepository, brothRepository, proteinRepository },
+        {
+          orderEntity: Order,
+          brothEntity: Broth,
+          proteinEntity: Protein,
+        },
+      ),
     ),
   );
+
   server.listen(PORT, () => console.log(`Running server on port ${PORT}`));
 })();

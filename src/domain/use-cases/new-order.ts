@@ -1,4 +1,3 @@
-import { DatabaseWrapper } from '../../data/interfaces/database-wrapper';
 import { parseDataAccordingEntity } from '../../utils/entity-parser';
 import { formatDescriptionOrder } from '../../utils/format-description-order';
 import { IBrothRepository } from '../interfaces/repositories/broth-repository';
@@ -6,9 +5,6 @@ import { IOrderRepository } from '../interfaces/repositories/order-repository';
 import { IProteinRepository } from '../interfaces/repositories/protein-repository';
 import { INewOrderUseCase } from '../interfaces/use-cases/new-order';
 import { OrderNumber } from '../providers/order-number';
-import { BrothRepository } from '../repositories/broth-repository';
-import { OrderRepository } from '../repositories/order-repository';
-import { ProteinRepository } from '../repositories/protein-repository';
 import { OrderCreatedType } from '../types/order/order-created';
 import { EntitiesType } from '../types/entities';
 import { OrderInputType } from '../types/order/order-input';
@@ -23,12 +19,19 @@ export class NewOrderUseCase implements INewOrderUseCase {
   brothEntity: any;
   proteinEntity: any;
 
-  constructor(database: DatabaseWrapper, entities: EntitiesType) {
-    this.orderRepository = new OrderRepository(database);
+  constructor(
+    repositories: {
+      orderRepository: IOrderRepository;
+      brothRepository: IBrothRepository;
+      proteinRepository: IProteinRepository;
+    },
+    entities: EntitiesType,
+  ) {
+    this.orderRepository = repositories.orderRepository;
     this.orderEntity = entities.orderEntity;
-    this.brothRepository = new BrothRepository(database);
+    this.brothRepository = repositories.brothRepository;
     this.brothEntity = entities.brothEntity;
-    this.proteinRepository = new ProteinRepository(database);
+    this.proteinRepository = repositories.proteinRepository;
     this.proteinEntity = entities.proteinEntity;
   }
 
