@@ -9,6 +9,8 @@ export const checkOrderDataMiddleware = (
 
   const isMissingInput = !body.brothId || !body.proteinId;
 
+  console.log(isMissingInput, body);
+
   if (isMissingInput) {
     return res
       .status(400)
