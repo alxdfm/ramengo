@@ -8,6 +8,7 @@ import { OrderNumber } from '../providers/order-number';
 import { OrderCreatedType } from '../types/order/order-created';
 import { EntitiesType } from '../types/entities';
 import { OrderInputType } from '../types/order/order-input';
+import { ApiError } from '../../errors/api-errors';
 
 const { LAMEN_IMAGE_URL } = process.env;
 
@@ -54,7 +55,15 @@ export class NewOrderUseCase implements INewOrderUseCase {
     return protein;
   }
 
+  validateInput(input: OrderInputType) {
+    if (!input.brothId || !input.proteinId) {
+      throw new ApiError('both brothId and proteinId are required', 400);
+    }
+  }
+
   async execute(input: OrderInputType): Promise<OrderCreatedType> {
+    this.validateInput(input);
+
     const orderNumber = await new OrderNumber().getOrderNumber();
 
     const broth = await this.getBroth(input.brothId);
