@@ -26,12 +26,10 @@ const { PORT } = process.env;
   const brothRepository = new BrothRepository(database);
   const orderRepository = new OrderRepository(database);
 
-  const router = express.Router();
-
   server.use(
     '/',
     cors(),
-    // authorizationMiddleware,
+    authorizationMiddleware,
     OrderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },
@@ -41,15 +39,12 @@ const { PORT } = process.env;
           proteinEntity: Protein,
         },
       ),
-      router,
     ),
     ProteinRouter(
       new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
-      router,
     ),
     BrothRouter(
       new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
-      router,
     ),
   );
 

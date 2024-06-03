@@ -1,11 +1,10 @@
-import { Request, Response, Router } from 'express';
+import express, { Request, Response } from 'express';
 import { ErrorType } from '../types';
 import { INewOrderUseCase } from '../../domain/interfaces/use-cases/new-order';
 
-export default function OrderRouter(
-  newOrderUseCase: INewOrderUseCase,
-  router: Router,
-) {
+export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
+  const router = express.Router();
+
   router.post('/order', async (req: Request, res: Response) => {
     try {
       console.log(req.body);

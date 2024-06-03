@@ -7,6 +7,7 @@ export const authorizationMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
+  console.log(req.body);
   const apiKey = req.headers['x-api-key'];
 
   const isEmptyApiKey = !apiKey;
