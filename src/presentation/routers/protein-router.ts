@@ -9,7 +9,6 @@ export default function broteinRouter(
 
   router.get('/proteins', async (req: Request, res: Response) => {
     try {
-      console.log('test', req.body);
       const proteins = await getAllProteinsUseCase.execute();
       return res.send(proteins);
     } catch (err) {

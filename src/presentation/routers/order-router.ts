@@ -7,7 +7,8 @@ export default function orderRouter(newOrderUseCase: INewOrderUseCase) {
 
   router.post('/order', async (req: Request, res: Response) => {
     try {
-      const order = await newOrderUseCase.execute(req.body);
+      const jsonParsedInput = JSON.parse(req.body);
+      const order = await newOrderUseCase.execute(jsonParsedInput);
       return res.status(201).send(order);
     } catch (err: any) {
       const error: ErrorType = { error: err.errorMessage } || {
