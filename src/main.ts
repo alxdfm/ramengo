@@ -1,6 +1,4 @@
 import server from './server';
-import express from 'express';
-import cors from 'cors';
 import { TypeORMWrapper } from './data/data-sources/typeorm/typeorm-wrapper';
 import { MySQLDataSource } from './data/data-sources/typeorm/mysql-data-source';
 import { GetAllProteinsUseCase } from './domain/use-cases/get-all-proteins';
@@ -26,9 +24,9 @@ const { PORT } = process.env;
   const brothRepository = new BrothRepository(database);
   const orderRepository = new OrderRepository(database);
 
+  server.use(authorizationMiddleware);
+
   server.use(
-    '/',
-    authorizationMiddleware,
     OrderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },
@@ -39,9 +37,13 @@ const { PORT } = process.env;
         },
       ),
     ),
+  );
+  server.use(
     ProteinRouter(
       new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
     ),
+  );
+  server.use(
     BrothRouter(
       new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
     ),
