@@ -30,7 +30,7 @@ const { PORT } = process.env;
 
   server.use(
     '/',
-    // cors(),
+    cors(),
     // authorizationMiddleware,
     OrderRouter(
       new NewOrderUseCase(
