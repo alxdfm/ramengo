@@ -76,10 +76,11 @@ export class NewOrderUseCase implements INewOrderUseCase {
     });
 
     const result = await this.orderRepository.createOrder(formattedEntity);
+    const description = formatDescriptionOrder(broth.name, protein.name);
 
     return {
       id: result.id,
-      description: formatDescriptionOrder(broth.name, protein.name),
+      description: description,
       image: String(LAMEN_IMAGE_URL),
     };
   }

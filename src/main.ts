@@ -29,12 +29,6 @@ const { PORT } = process.env;
     '/',
     cors(),
     authorizationMiddleware,
-    ProteinRouter(
-      new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
-    ),
-    BrothRouter(
-      new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
-    ),
     OrderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },
@@ -44,6 +38,12 @@ const { PORT } = process.env;
           proteinEntity: Protein,
         },
       ),
+    ),
+    ProteinRouter(
+      new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
+    ),
+    BrothRouter(
+      new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
     ),
   );
 
