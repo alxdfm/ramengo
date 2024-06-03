@@ -59,6 +59,12 @@ export class NewOrderUseCase implements INewOrderUseCase {
     }
   }
 
+  hasBrothAndProtein(broth: Broth, protein: Protein) {
+    if (!broth || !protein) {
+      throw new ApiError('broth or protein not found', 404);
+    }
+  }
+
   async execute(input: OrderInputType): Promise<OrderCreatedType> {
     this.validateInput(input);
 
@@ -66,6 +72,8 @@ export class NewOrderUseCase implements INewOrderUseCase {
 
     const broth = await this.getBroth(input.brothId);
     const protein = await this.getProtein(input.proteinId);
+
+    this.hasBrothAndProtein(broth, protein);
 
     const formattedEntity = parseDataAccordingEntity(new this.orderEntity(), {
       id: orderNumber,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ApiError } from '../../errors/api-errors';
 
 const { ORDER_ID_URL, ORDER_ID_API_KEY } = process.env;
 
@@ -15,7 +16,7 @@ export default class OrderNumber {
 
       return response.data.orderId;
     } catch (err: any) {
-      throw new Error(`Error getting orderId: ${err.message}`);
+      throw new ApiError('error getting orderId', 500);
     }
   }
 }
