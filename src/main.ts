@@ -28,7 +28,6 @@ const { PORT } = process.env;
 
   server.use(
     '/',
-    cors(),
     authorizationMiddleware,
     OrderRouter(
       new NewOrderUseCase(
