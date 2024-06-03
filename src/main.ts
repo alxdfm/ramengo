@@ -8,9 +8,9 @@ import { Order } from './data/data-sources/typeorm/entities/order';
 import { Broth } from './data/data-sources/typeorm/entities/broth';
 import { Protein } from './data/data-sources/typeorm/entities/protein';
 import { authorizationMiddleware } from './presentation/middlewares/authorization-middleware';
-import ProteinRouter from './presentation/routers/protein-router';
-import BrothRouter from './presentation/routers/broth-router';
-import OrderRouter from './presentation/routers/order-router';
+import proteinRouter from './presentation/routers/protein-router';
+import brothRouter from './presentation/routers/broth-router';
+import orderRouter from './presentation/routers/order-router';
 import { ProteinRepository } from './domain/repositories/protein-repository';
 import { BrothRepository } from './domain/repositories/broth-repository';
 import { OrderRepository } from './domain/repositories/order-repository';
@@ -27,7 +27,7 @@ const { PORT } = process.env;
   server.use(authorizationMiddleware);
 
   server.use(
-    OrderRouter(
+    orderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },
         {
@@ -39,12 +39,12 @@ const { PORT } = process.env;
     ),
   );
   server.use(
-    ProteinRouter(
+    proteinRouter(
       new GetAllProteinsUseCase(proteinRepository, { proteinEntity: Protein }),
     ),
   );
   server.use(
-    BrothRouter(
+    brothRouter(
       new GetAllBrothsUseCase(brothRepository, { brothEntity: Broth }),
     ),
   );

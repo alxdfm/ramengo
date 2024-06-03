@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { IGetAllBrothsUseCase } from '../../domain/interfaces/use-cases/get-all-broths';
 import { ErrorType } from '../types';
 
-export default function BrothRouter(getAllBrothsUseCase: IGetAllBrothsUseCase) {
+export default function brothRouter(getAllBrothsUseCase: IGetAllBrothsUseCase) {
   const router = express.Router();
 
   router.get('/broths', async (req: Request, res: Response) => {
