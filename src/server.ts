@@ -5,6 +5,7 @@ const server = express();
 server.use(async (req, res, next) => {
   console.log(req.body);
   cors();
+  next();
 });
 server.use(express.json());
 
