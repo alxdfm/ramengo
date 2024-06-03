@@ -24,9 +24,10 @@ const { PORT } = process.env;
   const brothRepository = new BrothRepository(database);
   const orderRepository = new OrderRepository(database);
 
-  server.use(authorizationMiddleware);
+  server.use('/', authorizationMiddleware);
 
   server.use(
+    '/',
     OrderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },

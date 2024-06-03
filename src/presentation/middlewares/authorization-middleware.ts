@@ -22,5 +22,5 @@ export const authorizationMiddleware = (
     return res.status(401).send({ error: 'wrong x-api-key' });
   }
 
-  next();
+  return next();
 };
