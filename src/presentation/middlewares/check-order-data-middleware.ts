@@ -10,7 +10,9 @@ export const checkOrderDataMiddleware = (
   const isMissingInput = !body.brothId || !body.proteinId;
 
   if (isMissingInput) {
-    res.status(400).send({ error: 'both brothId and proteinId are required' });
+    return res
+      .status(400)
+      .send({ error: 'both brothId and proteinId are required' });
   }
 
   return next();
