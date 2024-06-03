@@ -9,10 +9,10 @@ export default function BrothRouter(getAllBrothsUseCase: IGetAllBrothsUseCase) {
   router.get('/broths', async (req: Request, res: Response) => {
     try {
       const broths = await getAllBrothsUseCase.execute();
-      res.send(broths);
+      return res.send(broths);
     } catch (err) {
       const error: ErrorType = { error: 'could not get broths' };
-      res.status(500).send(error);
+      return res.status(500).send(error);
     }
   });
 

@@ -13,10 +13,10 @@ export default function OrderRouter(newOrderUseCase: INewOrderUseCase) {
     async (req: Request, res: Response) => {
       try {
         const order = await newOrderUseCase.execute(req.body);
-        res.status(201).send(order);
+        return res.status(201).send(order);
       } catch (err) {
         const error: ErrorType = { error: 'could not place order' };
-        res.status(500).send(error);
+        return res.status(500).send(error);
       }
     },
   );
