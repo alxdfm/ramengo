@@ -30,8 +30,8 @@ const { PORT } = process.env;
 
   server.use(
     '/',
-    cors(),
-    authorizationMiddleware,
+    // cors(),
+    // authorizationMiddleware,
     OrderRouter(
       new NewOrderUseCase(
         { orderRepository, brothRepository, proteinRepository },
